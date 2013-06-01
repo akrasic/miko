@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.join(File.dirname(__FILE__), '../lib')
+require "find"
+require "fileutils"
+require 'miko'
+
+if ARGV.empty?
+		puts "USAGE: miko USER"
+else
+		c = Miko.new( ARGV[0] )
+
+		begin 
+			c.run
+			
+		 	if c.found.empty?
+				puts "No scripts found"
+			else
+				puts "Scripts detected"
+				c.found.sort.each { |script| puts script }	
+			end
+		rescue Exception => e
+				puts e
+		end
+end
+
