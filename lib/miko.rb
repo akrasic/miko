@@ -7,7 +7,7 @@ class Miko
 	#
 	# Start the class
 	def initialize( user )
-		@user = user
+		@user				=	user
 		@directory	=	"/home/#{@user}/public_html"
 		@found			= []
 	end
@@ -23,37 +23,37 @@ class Miko
 	private
 	def find_installs
 		Find.find( @directory ) do |path|
-				@path = path
-				if File.readable?(path)
-					if path =~ /.*\/version\.php$/
-						find_wordpress_joomla
-					elsif path =~ /.*\/bootstrap.inc$/
-						find_drupal
-					elsif path =~ /.*\/modules\/system\/system.module$/
-						find_drupal
-					elsif path =~ /.*\/index.php$/
-						find_smf_version
-					elsif path =~ /.*\/app\/Mage.php$/
-						find_magento_version
-					end
-				
-				else
-						raise "Error accessing #{path}"
+			@path = path
+			if File.readable?(path)
+				if path =~ /.*\/version\.php$/
+					find_wordpress_joomla
+				elsif path =~ /.*\/bootstrap.inc$/
+					find_drupal
+				elsif path =~ /.*\/modules\/system\/system.module$/
+					find_drupal
+				elsif path =~ /.*\/index.php$/
+					find_smf_version
+				elsif path =~ /.*\/app\/Mage.php$/
+					find_magento_version
 				end
+			else
+				raise "Error accessing #{path}"
+			end
 		end
 	end
 
 	def output( result ) 
-			if !result.nil? 
-					@found << result
-			end
+		if !result.nil? 
+			@found << result
+		end
 	end
 	##
 	## Wp and Joomla share the same filename for its version file
 	def find_wordpress_joomla
-		version   = ""
-		acct_home = ""
-		script    = ""
+		version		= ""
+		acct_home	= ""
+		script		= ""
+
 		File.open( @path, "r" ).each_line do |line|
 			if ( line["wp_version ="] )
 				version =  line.split(" ")[2][/([\d.]+)/]
@@ -105,9 +105,9 @@ class Miko
 	end
 
 	def find_smf_version
-		version		= ""
-		acct_home = ""
-		script 		= ""
+		version		=	""
+		acct_home	=	""
+		script		= ""
 
 		File.open( @path, "r").each_line do |line|
 			if ( line["$forum_version"] )
@@ -123,7 +123,7 @@ class Miko
 	end		
 
 	def find_magento_version
-		acct_home 	= ""
+		acct_home		=	""
 		script			=	""
 		major				= ""
 		minor				= ""
@@ -134,19 +134,19 @@ class Miko
 
 		File.open( @path, "r").each_line do |line|
 			if ( line[/'major'.*=>.*/])
-					major			= line[/[0-9]/]
-					script 		=	"Magento"
-					acct_home	=	path.gsub("app/Mage.php", "")
+				major			= line[/[0-9]/]
+				script		=	"Magento"
+				acct_home	=	path.gsub("app/Mage.php", "")
 			elsif ( line[/'minor'.*=>.*/] )
-					minor			= line[/[0-9]/]
+				minor			= line[/[0-9]/]
 			elsif ( line[/'revision'.*=>.*/] )
-					revision	=	line[/[0-9]/]
+				revision	=	line[/[0-9]/]
 			elsif ( line[/'patch'.*=>.*/] )
-					patch			=	line[/[0-9]/]
+				patch			=	line[/[0-9]/]
 			elsif ( line[/'stability'.*=>.*/] )
-					stability	= line.split("=>")[1][/[a-z]+/]
+				stability	= line.split("=>")[1][/[a-z]+/]
 			elsif ( line[/'number'.*=>.*/] )
-					number = line.split("=>")[1][/[0-9]+/]
+				number = line.split("=>")[1][/[0-9]+/]
 			end
 		end
 		if !stability.nil?
