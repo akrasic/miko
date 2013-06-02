@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Miko::VERSION
   spec.authors       = ["Antun Krasic"]
   spec.email         = ["antun@martuna.co"]
-  spec.description   = %q{Script collection first}
-  spec.summary       = %q{It has been a fun day for everybody}
+  spec.description   = %q{Script installation finder}
+  spec.summary       = %q{Locates popular script installations under account}
   spec.homepage      = "https://github.com/akrasic/miko"
   spec.license       = "MIT"
 
