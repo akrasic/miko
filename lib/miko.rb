@@ -27,6 +27,7 @@ class Miko
 			if File.readable?(path)
 				if path =~ /.*\/version\.php$/
 					find_wordpress_joomla
+					find_moodle
 				elsif path =~ /.*\/bootstrap.inc$/
 					find_drupal
 				elsif path =~ /.*\/modules\/system\/system.module$/
@@ -35,16 +36,22 @@ class Miko
 					find_smf_version
 				elsif path =~ /.*\/app\/Mage.php$/
 					find_magento_version
+				elsif path =~ /.*\/styles\/prosilver\/template\/template.cfg$/
+					find_phpbb_version
+				elsif path =~/.*\/inc\/class_core.php$/
+					find_mybb_version
 				end
 			else
-				raise "Error accessing #{path}"
+				raise "Problem accessing #{path}"
 			end
 		end
 	end
 
-	def output( result ) 
-		if !result.nil? 
-			@found << result
+	def output( acct_home, version,script  ) 
+		if !version.nil? 
+			if !version.empty?
+				@found << "#{script} #{version}\t=>\t#{acct_home}" 
+			end
 		end
 	end
 	##
@@ -72,9 +79,7 @@ class Miko
 				version << "." <<  line.split(" ")[3][/[0-9]/].to_s
 			end
 		end
-		if !version.empty?
-				output( "#{script} #{version}\t=>\t#{acct_home}" )
-		end
+		output( acct_home, version, script )
 	end
 
 	## 
@@ -98,10 +103,7 @@ class Miko
 				script = "Drupal"
 			end
 		end
-		if !version.empty?
-			output( "#{script} #{version}\t=>\t#{acct_home}" )
-		end
-
+		output( acct_home, version, script)
 	end
 
 	def find_smf_version
@@ -116,10 +118,7 @@ class Miko
 					script = "SMF Forum"
 			end
 		end
-		if  !version.empty?
-				output( "#{script} #{version}\t=>\t#{acct_home}" )
-		end
-
+		output( acct_home, version, script)
 	end		
 
 	def find_magento_version
@@ -150,9 +149,63 @@ class Miko
 			end
 		end
 		if !stability.nil?
-			output( "#{script} #{major}.#{minor}.#{revision}.#{patch}-#{stability}#{number}\t=>\t#{acct_home}" )
+			version = "#{major}.#{minor}.#{revision}.#{patch}-#{stability}#{number}"
 		else
-			output( "#{script} #{major}.#{minor}.#{revision}.#{patch}\t=>\t#{acct_home}" )
+			version = "#{major}.#{minor}.#{revision}.#{patch}"
 		end
+		output( acct_home, version, script)
+	end
+
+	##
+	## phpBB version
+	## Versions are inside the CHANGELOG or the subsilver template
+	def find_phpbb_version
+		acct_home		=	""
+		script			=	""
+		version			=	""
+
+		File.open( @path, "r").each_line do |line|
+			if ( line["version ="] )
+				version		= line.split("=")[1][/([\d.]+)/]
+				acct_home	=	path.gsub("styles/prosilver/template/template.cfg", "")
+				script		=	"phpBB"
+			end
+		end
+		output( acct_home, version, script)
+	end
+
+	def find_mybb_version
+		acct_home		= ""
+		script			=	""
+		version			=	""
+
+		File.open( @path, "r").each_line do |line|
+			if ( line["public $version ="] )
+				version			=	line.split("=")[1][/([\d.]+)/]
+				acct_home		=	path.gsub("inc/class_core.php", "")
+				script			=	"MyBB"
+
+			end
+		end
+
+		output( acct_home, version, script)
+	end		
+
+
+	def find_moodle
+		acct_home		=	""
+		script			= ""
+		version			=	""
+
+		File.open(@path, "r").each_line do |line|
+			if ( line["$release "] )
+				version		= line.split("=")[1].gsub("'", "").split(";")[0]
+				acct_home	=	path.gsub("version.php", "")
+				script		=	"Moodle"
+			end
+
+		end
+	
+		output( acct_home, version, script)
 	end
 end
