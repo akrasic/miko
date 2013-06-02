@@ -11,7 +11,6 @@ Supported scripts ( so far ):
 - SMF Forum
 - MyBB
 - Moodle
-- Prestashop
 
 ## Installation
 
