@@ -7,6 +7,11 @@ Supported scripts ( so far ):
 - Joomla  1.x , 2.x, 3.x
 - Drupal 7.x, 6.x
 - Magento
+- phpBB
+- SMF Forum
+- MyBB
+- Moodle
+- Prestashop
 
 ## Installation
 
