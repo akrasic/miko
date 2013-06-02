@@ -9,7 +9,7 @@ class Miko
 	def initialize( user )
 		@user				=	user
 		@directory	=	"/home/#{@user}/public_html"
-		@found			= []
+		@found			=	[]
 	end
 
 	def run
@@ -95,7 +95,7 @@ class Miko
 
 				## Drupal 6 / Drupal7 compatability
 				if path =~ /.*\/modules\/system\/system.module$/
-						acct_home	= path.gsub("modules/system/system.module", "")
+					acct_home	= path.gsub("modules/system/system.module", "")
 				else
 					acct_home = path.gsub("includes/bootstrap.inc", "")
 				end
@@ -109,7 +109,7 @@ class Miko
 	def find_smf_version
 		version		=	""
 		acct_home	=	""
-		script		= ""
+		script		=	""
 
 		File.open( @path, "r").each_line do |line|
 			if ( line["$forum_version"] )
@@ -124,10 +124,10 @@ class Miko
 	def find_magento_version
 		acct_home		=	""
 		script			=	""
-		major				= ""
-		minor				= ""
+		major				=	""
+		minor				=	""
 		revision		= ""
-		patch				= ""
+		patch				=	""
 		stability		=	false
 		number			= ""
 
@@ -175,7 +175,7 @@ class Miko
 	end
 
 	def find_mybb_version
-		acct_home		= ""
+		acct_home		=	""
 		script			=	""
 		version			=	""
 
@@ -194,7 +194,7 @@ class Miko
 
 	def find_moodle
 		acct_home		=	""
-		script			= ""
+		script			=	""
 		version			=	""
 
 		File.open(@path, "r").each_line do |line|
