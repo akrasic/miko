@@ -5,14 +5,15 @@ Search for script installations under a cPanel account
 Supported scripts ( so far ):
 - Wordpress
 - Joomla  1.x , 2.x, 3.x
-- Drupal
+- Drupal 7.x, 6.x
+- Magento
 
 ## Installation
 
 gem install miko
 
 ## Usage
-```$ miko USERNAME``
+``$ miko USERNAME``
 
 ## Contributing
 
