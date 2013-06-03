@@ -1,6 +1,6 @@
 # Miko
 
-Search for script installations under a cPanel account
+Search for script installations versions under a account. 
 
 Supported scripts ( so far ):
 - Wordpress
@@ -13,11 +13,16 @@ Supported scripts ( so far ):
 - Moodle
 
 ## Installation
-
-gem install miko
+`` gem install miko ``
 
 ## Usage
-``$ miko USERNAME``
+You can try to scan for the user accoutn using the "-u"/"--user" flag which translates to /home/USER/ or use "-d"/"--directory" flag to specify an exact directoy you want to scan.
+``
+Usage: miko [OPTIONS]                                                                                                             
+    -u, --user USER                  Username - translates into /home/USER/                                                       
+    -d, --directory DIRECTORY        Specify directory instead username                                                           
+    -h, --help                       Display Help 
+``
 
 ## Contributing
 
