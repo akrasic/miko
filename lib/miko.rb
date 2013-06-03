@@ -68,16 +68,13 @@ class Miko
         acct_home  = path.gsub("/wp-includes/version.php", "")
         script     = "Wordpress"
       elsif ( line["public $RELEASE"] )
-        version = line.split(" ")[3][/([\d.]+)/]
+        version = line[/([\d.]+)/]+ "."+ joomla_devlevel
         acct_home = path.gsub("libraries/cms/version/version.php", "")
         script    = "Joomla"
       elsif (line["var $RELEASE"] )
-        version = line.split(" ")[3][/([\d.]+)/]
+        version = line[/([\d.]+)/]+ "."+ joomla_devlevel
         acct_home = path.gsub("libraries/joomla/version.php", "")
         script = "Joomla"
-      elsif (line["public $DEV_LEVEL" ])
-      elsif (line["var $DEV_LEVEL"] )
-        version << "." <<  line.split(" ")[3][/[0-9]/].to_s
       end
       # Output ony when we has a defined variable
       unless defined?(version).nil?
@@ -86,6 +83,10 @@ class Miko
     end
   end
 
+  def joomla_devlevel
+        fi  = File.read( @path )
+        fi[/DEV_LEVEL.*'/][/\d+/]   
+  end
   ## Find Drupal version
   def find_drupal
     File.open( @path, "r").each_line do |line|
