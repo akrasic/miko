@@ -17,12 +17,10 @@ Supported scripts ( so far ):
 
 ## Usage
 You can try to scan for the user accoutn using the "-u"/"--user" flag which translates to /home/USER/ or use "-d"/"--directory" flag to specify an exact directoy you want to scan.
-``
 Usage: miko [OPTIONS]                                                                                                             
     -u, --user USER                  Username - translates into /home/USER/                                                       
     -d, --directory DIRECTORY        Specify directory instead username                                                           
     -h, --help                       Display Help 
-``
 
 ## Contributing
 
