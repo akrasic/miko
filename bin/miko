@@ -1,26 +1,52 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), '../lib')
-require "find"
-require "fileutils"
+require 'find'
+require 'fileutils'
 require 'miko'
+require 'optparse'
 
-if ARGV.empty?
-		puts "USAGE: miko USER"
-else
-		c = Miko.new( ARGV[0] )
+options = {}
+optparse  = OptionParser.new do |opts|
+  opts.banner = "Usage: miko [OPTIONS]"
 
-		begin 
-			c.run
-			
-		 	if c.found.empty?
-				puts "No scripts found"
-			else
-				puts "Scripts detected"
-				c.found.sort.each { |script| puts script }	
-			end
-		rescue Exception => e
-				puts e
-		end
+  opts.on( "-u user", "--user USER", "Username - translates into /home/USER/") do |user|
+    options[:user]  = user
+  end
+
+  opts.on( "-d dir", "--directory DIRECTORY", "Specify directory instead username") do |dir|
+    options[:directory] = dir
+  end
+
+  opts.on( "-h", "--help", "Display Help") do
+    puts opts
+    exit
+  end
 end
 
+
+begin
+  optparse.parse!
+  if options[:user].nil? and  options[:directory].nil?
+    puts optparse
+    exit
+  end
+
+  c = Miko.new( options )
+
+  begin
+    c.run
+    if c.found.empty?
+      puts "No scripts detected"
+    else
+      puts "Scrips detected"
+      c.found.sort.each{ | script| puts script }
+    end
+  rescue Exception => e
+    puts e
+  end
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
+  puts $!.to_s
+  puts optparse
+  exit
+end
