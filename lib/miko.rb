@@ -52,13 +52,13 @@ class Miko
     end
   end
 
+
   def output( acct_home, version,script  )
-    if !version.nil?
-      if !version.empty?
-        @found << "#{script} #{version}\t=>\t#{acct_home}"
-      end
+    unless version.nil? or version.empty?
+      @found << "#{script} #{version}\t=>\t#{acct_home}"
     end
   end
+
   ##
   ## Wp and Joomla share the same filename for its version file
   def find_wordpress_joomla
@@ -119,8 +119,6 @@ class Miko
   end
 
   def find_magento_version
-    stability = false
-    minor = ""
     File.open( @path, "r").each_line do |line|
       if ( line[/'major'.*=>.*/])
         major     = line[/[0-9]/]
