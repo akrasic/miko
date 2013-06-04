@@ -8,7 +8,7 @@ require 'optparse'
 
 options = {}
 optparse  = OptionParser.new do |opts|
-  opts.banner = "Usage: miko [OPTIONS]"
+  opts.banner = "Usage: miko [options]"
 
   opts.on( "-u user", "--user USER", "Username - translates into /home/USER/") do |user|
     options[:user]  = user
@@ -16,6 +16,10 @@ optparse  = OptionParser.new do |opts|
 
   opts.on( "-d dir", "--directory DIRECTORY", "Specify directory instead username") do |dir|
     options[:directory] = dir
+  end
+
+  opts.on("-v", "--verbose", "Be verbose and display errors" ) do |ver|
+    options[:verbose] = ver
   end
 
   opts.on( "-h", "--help", "Display Help") do

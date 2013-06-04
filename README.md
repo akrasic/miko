@@ -1,4 +1,4 @@
-# Miko 0.0.5
+# Miko 0.0.6
 
 Search for script installations versions under a account. 
 

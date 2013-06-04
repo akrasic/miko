@@ -4,6 +4,7 @@ class Miko
   attr_accessor :directory
   attr_accessor :found
   attr_accessor :path
+  attr_accessor :verbose
 
   def initialize( option )
     unless option[:user].nil?
@@ -14,40 +15,54 @@ class Miko
     unless option[:directory].nil?
       @directory  = option[:directory]
     end
+
+    unless option[:verbose]
+      @verbose = option[:verbose]
+    end
+
     @found      = []
   end
 
   def run
-    if File.directory?(@directory )
+    if File.directory?(@directory ) and File.readable?(@directory)
       find_installs
+
     else
-      raise "Directory doesn't exist"
+      unless defined?(@verbose).nil?
+        raise "Problem accessing directory"
+      end
     end
   end
 
   private
+  ##
+  ## Skip /home/virtfs
   def find_installs
     Find.find( @directory ) do |path|
       @path = path
-      if File.readable?(path)
-        if path =~ /.*\/version\.php$/
-          find_wordpress_joomla
-          find_moodle
-        elsif path =~ /.*\/bootstrap.inc$/
-          find_drupal
-        elsif path =~ /.*\/modules\/system\/system.module$/
-          find_drupal
-        elsif path =~ /.*\/index.php$/
-          find_smf_version
-        elsif path =~ /.*\/app\/Mage.php$/
-          find_magento_version
-        elsif path =~ /.*\/styles\/prosilver\/template\/template.cfg$/
-          find_phpbb_version
-        elsif path =~/.*\/inc\/class_core.php$/
-          find_mybb_version
+      if File.readable_real?(path)
+        if path[/virtfs/].nil?
+          if path =~ /.*\/version\.php$/
+            find_wordpress_joomla
+            find_moodle
+          elsif path =~ /.*\/bootstrap.inc$/
+            find_drupal
+          elsif path =~ /.*\/modules\/system\/system.module$/
+            find_drupal
+          elsif path =~ /.*\/index.php$/
+            find_smf_version
+          elsif path =~ /.*\/app\/Mage.php$/
+            find_magento_version
+          elsif path =~ /.*\/styles\/prosilver\/template\/template.cfg$/
+            find_phpbb_version
+          elsif path =~/.*\/inc\/class_core.php$/
+            find_mybb_version
+          end
         end
       else
-        puts "Problem accessing #{path}"
+        unless defined?( @verbose).nil?
+          puts "Problem accessing #{path}"
+        end
       end
     end
   end
@@ -67,14 +82,12 @@ class Miko
         version =  line.split(" ")[2][/([\d.]+)/]
         acct_home  = path.gsub("/wp-includes/version.php", "")
         script     = "Wordpress"
-      elsif ( line["public $RELEASE"] )
-        version = line[/([\d.]+)/]+ "."+ joomla_devlevel
-        acct_home = path.gsub("libraries/cms/version/version.php", "")
-        script    = "Joomla"
-      elsif (line["var $RELEASE"] )
-        version = line[/([\d.]+)/]+ "."+ joomla_devlevel
-        acct_home = path.gsub("libraries/joomla/version.php", "")
-        script = "Joomla"
+      elsif ( line["$RELEASE"] )
+        if @path =~ /.*\/libraries\/cms\/version\/version.php$/ ||  @path =~ /.*\/libraries\/joomla\/version.php$/
+          version = line[/([\d.]+)/]+ "."+ joomla_devlevel
+          acct_home = path.split("libraries")[0]
+          script = "Joomla"
+        end
       end
       # Output ony when we has a defined variable
       unless defined?(version).nil?
@@ -84,9 +97,9 @@ class Miko
   end
 
   def joomla_devlevel
-        fi  = File.read( @path )
-        fi[/DEV_LEVEL.*'/][/\d+/]   
+        File.read( @path )[/DEV_LEVEL.*'/][/\d+/]
   end
+
   ## Find Drupal version
   def find_drupal
     File.open( @path, "r").each_line do |line|
