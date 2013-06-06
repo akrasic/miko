@@ -6,9 +6,12 @@ module Miko
       super( path )
       
       ## Load ver 
-      @version    = File.read( path )[/.*public.*version.*=.*/][/([\d.]+)/]
-      @acct_home   = path.gsub("inc/class_core.php", "")
-      @script      = "MyBB"
+      ver         = File.read( path )[/.*public.*version.*=.*/]
+      unless ver.nil?
+        @version    = ver[/([\d.]+)/]
+        @acct_home  = path.gsub("inc/class_core.php", "")
+        @script     = "MyBB"
+      end
     end
     
   end
