@@ -1,7 +1,8 @@
 ##
-## Require the scripts from scripts/APP.rb
-## Add the Hash
-#
+## Main miko controller 
+## Include, specify and add new modules and regex defs
+##
+
 require 'scripts/wordpress.rb'
 require 'scripts/joomla.rb'
 require 'scripts/drupal.rb'

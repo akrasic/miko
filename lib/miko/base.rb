@@ -1,3 +1,8 @@
+##
+### Base class for script modules
+### Provides with necessary helpers to successfulyl
+### tie up the integration.
+
 module Miko
   class Base
     attr_accessor :path, :acct_home, :version, :script
@@ -12,7 +17,6 @@ module Miko
         l << line
       end
       l
-      #File.read( @path )
     end
 
     def showVersion

@@ -1,3 +1,6 @@
+##
+## Glue that class Miko::Applications 
+## 
 require 'miko/applications.rb'
 
 module Miko
@@ -14,7 +17,7 @@ module Miko
       end
       
       unless option[:directory].nil?
-        @directory  = options[:directory]
+        @directory  = option[:directory]
       end
       
       unless option[:verbose].nil?
