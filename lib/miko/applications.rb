@@ -18,9 +18,8 @@ require 'scripts/modx.rb'
 
 module Miko
   class Applications
-    attr_accessor :applist
+    attr_accessor :applist, :option
     attr_accessor :user, :directory, :found, :path, :verbose
-    attr_accessor :option
 
     def initialize(option)
       @option = option
@@ -97,7 +96,7 @@ module Miko
     ## Loops trough the defined @applist checking if the provided path wouldn't match
     ## once of defined regex definitions
     def checkScripts( path )
-      if @option[:script].nil?
+      if @option[:script].empty? 
         @applist.each do |sc, val|
           if !val.match(path).nil?
             f =  final_find(sc, path)

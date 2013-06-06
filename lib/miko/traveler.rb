@@ -34,7 +34,7 @@ module Miko
     end
     ## Define your awesum stuff here
     def run(  )
-      if !defined?(@list).nil?
+      if option[:list]
         listScripts
       else
         if File.directory?(@directory) and File.readable?(@directory)

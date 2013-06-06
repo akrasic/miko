@@ -22,9 +22,11 @@ optparse  = OptionParser.new do |opts|
   end
 
   options[:script] = []
-  opts.on("-s sc", "--script SCRIPT", "Search for a specific script or scripts.\n\t\t\tFor multiple scripts you can pass them as a list: miko -s wordpress -s smf -d /some/directory") do |script|
+  opts.on("-s sc", "--script SCRIPT", "Search for a specific script or scripts.\n\t\t\t\t     For multiple scripts you can pass them as a list: miko -s wordpress -s smf -d /some/directory") do |script|
     options[:script] << script
   end
+
+  options[:list] = false
   opts.on( "-l", "--list", "Lists supported scripts") do |list|
     options[:list] = list
   end
@@ -54,7 +56,8 @@ begin
 
   begin
     c.run
-    if options[:list].nil?
+
+    unless options[:list]
       if c.found.empty?
         puts "No scripts detected"
       else
