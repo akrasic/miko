@@ -8,10 +8,14 @@ module Miko
     def initialize( path )
       super( path )
       
-      ## Load ver 
-      @version    = File.read( path )[/.*this->version.*/][/([\d.]+)/]
-      @acct_home   = path.gsub("bbpress.php", "")
-      @script      = "BBPress"
+      ##
+      ## Skip any false bbpress.php files 
+      ver         = File.read( path )[/.*this->version.*/]
+      unless ver.nil?
+        @version    = ver[/([\d.]+)/]
+        @acct_home  = path.gsub("bbpress.php", "")
+        @script     = "BBPress"
+      end
     end
     
   end
