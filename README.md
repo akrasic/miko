@@ -1,4 +1,4 @@
-# Miko 0.0.6
+# Miko 0.1.1
 
 Search for script installations versions under a account. 
 
@@ -11,6 +11,10 @@ Supported scripts ( so far ):
 - SMF Forum
 - MyBB
 - Moodle
+- Concrete5
+- e107
+- BBPress
+- ModX
 
 ## Installation
 `` gem install miko ``

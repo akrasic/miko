@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
+# miko 
+# Version 0.1.1
+#--------------------------------
 
 $LOAD_PATH << File.join(File.dirname(__FILE__), '../lib')
 require 'find'
 require 'fileutils'
-require 'miko'
+require 'miko/traveler'
 require 'optparse'
 
 options = {}
@@ -36,7 +39,7 @@ begin
     exit
   end
 
-  c = Miko.new( options )
+  c = Miko::Traveler.new( options )
 
   begin
     c.run
@@ -54,3 +57,4 @@ rescue OptionParser::InvalidOption, OptionParser::MissingArgument
   puts optparse
   exit
 end
+
