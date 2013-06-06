@@ -1,10 +1,10 @@
 require 'miko/base.rb'
-module Miko 
+module Miko
   class Moodle < Miko::Base
 
     def initialize( path )
       super( path )
-      
+
       versions = []
       File.open( path ).each_line {|x| versions << x if x =~ /MOODLE VERSION INFORMATION.*/ }
 
@@ -15,6 +15,6 @@ module Miko
 
       end
     end
-    
+
   end
 end

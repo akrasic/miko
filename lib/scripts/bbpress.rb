@@ -2,14 +2,14 @@
 ## BBPress search class
 ### BBPress :: http://bbpress.org/
 require 'miko/base.rb'
-module Miko 
+module Miko
   class BBPress < Miko::Base
 
     def initialize( path )
       super( path )
-      
+
       ##
-      ## Skip any false bbpress.php files 
+      ## Skip any false bbpress.php files
       ver         = File.read( path )[/.*this->version.*/]
       unless ver.nil?
         @version    = ver[/([\d.]+)/]
@@ -17,6 +17,6 @@ module Miko
         @script     = "BBPress"
       end
     end
-    
+
   end
 end
