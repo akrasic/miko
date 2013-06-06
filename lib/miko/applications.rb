@@ -13,6 +13,7 @@ require 'scripts/moodle.rb'
 require 'scripts/concrete5.rb'
 require 'scripts/e107.rb'
 require 'scripts/bbpress.rb'
+require 'scripts/modx.rb'
 
 module Miko
   class Applications
@@ -34,6 +35,7 @@ module Miko
                   'moodle'    =>  /.*\/version.php$/,
                   'concrete5' =>  /.*\/concrete\/config\/version.php$/,
                   'e107'      =>  /.*\/e107_admin\/ver.php$/,
+                  'modx'      =>  /.*\/core\/docs\/changelog.txt$/,
                   'bbpress'   =>  /.*\/bbpress.php$/
                   }
     end
@@ -82,6 +84,9 @@ module Miko
       when "bbpress"
         b   = Miko::BBPress.new(file)
         b.showVersion()
+      when "modx"
+        modx  = Miko::ModX.new(file)
+        modx.showVersion()
       end
     end
 
