@@ -1,5 +1,5 @@
 ##
-## Main miko controller 
+## Main miko controller
 ## Include, specify and add new modules and regex defs
 ##
 
@@ -20,10 +20,11 @@ module Miko
   class Applications
     attr_accessor :applist
     attr_accessor :user, :directory, :found, :path, :verbose
+    attr_accessor :option
 
-
-    def initialize
-      ## Add to applist 
+    def initialize(option)
+      @option = option
+      ## Add to applist
       ## name => /regxp
       @applist= { 'wordpress' =>  /.*\/wp-includes\/version.php$/,
                   'joomla15'  =>  /.*\/libraries\/joomla\/version.php$/,
@@ -93,15 +94,27 @@ module Miko
 
 
     ##
-    ## Loops trough the defined @applist checking if the provided path wouldn't match 
+    ## Loops trough the defined @applist checking if the provided path wouldn't match
     ## once of defined regex definitions
     def checkScripts( path )
-      @applist.each do |sc, val|
-        if !val.match(path).nil?
-          f =  final_find(sc, path) 
-          @found << f if !f.nil?
+      if @option[:script].nil?
+        @applist.each do |sc, val|
+          if !val.match(path).nil?
+            f =  final_find(sc, path)
+            @found << f if !f.nil?
+          end
+        end
+      else
+        @option[:script].each do |sc|
+          if !@applist[sc].match(path).nil?
+            f = final_find(sc, path)
+            @found << f if !f.nil?
+          end
         end
       end
+
+
+
     end
 
 

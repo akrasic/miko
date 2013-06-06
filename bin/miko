@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# miko 
+# miko
 # Version 0.1.1
 #--------------------------------
 
@@ -21,6 +21,14 @@ optparse  = OptionParser.new do |opts|
     options[:directory] = dir
   end
 
+  options[:script] = []
+  opts.on("-s sc", "--script SCRIPT", "Search for a specific script or scripts.\n\t\t\tFor multiple scripts you can pass them as a list: miko -s wordpress -s smf -d /some/directory") do |script|
+    options[:script] << script
+  end
+  opts.on( "-l", "--list", "Lists supported scripts") do |list|
+    options[:list] = list
+  end
+
   opts.on("-v", "--verbose", "Be verbose and display errors" ) do |ver|
     options[:verbose] = ver
   end
@@ -34,20 +42,25 @@ end
 
 begin
   optparse.parse!
-  if options[:user].nil? and  options[:directory].nil?
-    puts optparse
-    exit
+
+  if options[:list].nil?
+    if options[:user].nil? and  options[:directory].nil?
+      puts optparse
+      exit
+    end
   end
 
   c = Miko::Traveler.new( options )
 
   begin
     c.run
-    if c.found.empty?
-      puts "No scripts detected"
-    else
-      puts "Scrips detected"
-      c.found.sort.each{ | script| puts script }
+    if options[:list].nil?
+      if c.found.empty?
+        puts "No scripts detected"
+      else
+        puts "Scrips detected"
+        c.found.sort.each{ | script| puts script }
+      end
     end
   rescue Exception => e
     puts e
