@@ -22,7 +22,8 @@ module Miko
     def showVersion
       unless defined?(@version).nil?
         unless @version.nil? or @version.empty?
-          "#{@script} #{@version}\t=>\t#{@acct_home}"
+          #"#{@script} #{@version}\s =>\t#{@acct_home}"
+          "%-20s %-30s %20s" % [ @script, @version, @acct_home]
         end
       end
     end

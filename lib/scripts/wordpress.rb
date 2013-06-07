@@ -6,7 +6,7 @@ module Miko
       super( path )
 
       @version     = returnversion( @path )
-      @acct_home   = path.gsub("/wp-includes/version.php", "")
+      @acct_home   = path.gsub("wp-includes/version.php", "")
       @script      = "Wordpress"
     end
     

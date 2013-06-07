@@ -10,7 +10,7 @@ module Miko
 
       unless versions.empty?
         @script     = "Moodle"
-        @version    = File.read( path )[/.*release.*=.*/].to_s.split("=")[1].gsub("'", "").split(";")[0]
+        @version    = File.read( path )[/.*release.*=.*/].to_s.split("=")[1].gsub("'", "").split(";")[0].gsub(" ", "")
         @acct_home  = @path.gsub("version.php", "")
 
       end

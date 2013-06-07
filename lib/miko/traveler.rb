@@ -5,8 +5,6 @@ require 'miko/applications.rb'
 
 module Miko
   class Traveler < Miko::Applications
-    attr_accessor :paths
-    attr_accessor :user, :directory, :found, :path, :verbose
     attr_accessor :list
 
     def initialize( option )
@@ -34,7 +32,7 @@ module Miko
     end
     ## Define your awesum stuff here
     def run(  )
-      if !defined?(@list).nil?
+      if option[:list]
         listScripts
       else
         if File.directory?(@directory) and File.readable?(@directory)
