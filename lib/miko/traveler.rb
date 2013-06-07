@@ -5,8 +5,6 @@ require 'miko/applications.rb'
 
 module Miko
   class Traveler < Miko::Applications
-    attr_accessor :paths
-    attr_accessor :user, :directory, :found, :path, :verbose
     attr_accessor :list
 
     def initialize( option )

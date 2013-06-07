@@ -61,8 +61,10 @@ begin
       if c.found.empty?
         puts "No scripts detected"
       else
-        puts "Scrips detected"
+
+        puts"%-20s %-30s %20s \n " % [ "Name", "Version", "Installation"]
         c.found.sort.each{ | script| puts script }
+        puts "Scrips detected: #{ c.found.length.to_s }"
       end
     end
   rescue Exception => e
