@@ -55,7 +55,7 @@ Moodle               2.5(Build:20130514)            /home/antun/public_html/mood
 Moodle               2.5+(Build:20130530)           /home/antun/public_html/moodle/moodle/
 MyBB                 1.6.10                         /home/antun/public_html/mybb/Upload/
 SMF                  2.0.4                          /home/antun/public_html/smf/
-Wordpress            3.5.1                          /home/antun/public_html/wp/wordpress
+Wordpress            3.5.1                          /home/antun/public_html/wp/wordpress/
 e107                 1.0.4                          /home/antun/public_html/e107/
 phpBB                3.0.11                         /home/antun/public_html/phpbb/phpBB3/
 Scrips detected: 16
