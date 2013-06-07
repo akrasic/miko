@@ -11,18 +11,10 @@ module Miko
       @path = path 
     end
 
-    def load
-      l = []
-      File.open( @path ).each_line do |line|
-        l << line
-      end
-      l
-    end
-
+    # Output formatted version string
     def showVersion
       unless defined?(@version).nil?
         unless @version.nil? or @version.empty?
-          #"#{@script} #{@version}\s =>\t#{@acct_home}"
           "%-20s %-30s %20s" % [ @script, @version, @acct_home]
         end
       end
