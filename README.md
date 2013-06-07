@@ -37,6 +37,31 @@ Find scripts for a user account:
 Find specific scripts for a user or directoy
 `` miko -u USER -s wordpress -s phpbb -s joomla``
 `` miko -d /home/USER/some/other/dir/  -s wordpress -s phpbb -s joomla``
+
+## Output
+```
+Name                 Version                                Installation 
+ 
+BBPress              2.3.2                          /home/antun/public_html/bbpress/bbpress/
+Concrete5            5.6.1.2                        /home/antun/public_html/concrete/concrete5.6.1.2/
+Drupal               6.28                           /home/antun/public_html/drupal6/drupal-6.28/
+Drupal               7.22                           /home/antun/public_html/drupal7/drupal-7.22/
+Joomla               1.5.26                         /home/antun/public_html/j15/
+Joomla               3.1.1                          /home/antun/public_html/joomla/
+Magento              1.7.0.2                        /home/antun/public_html/magento/magento/
+Magento              1.8.0.0-alpha1                 /home/antun/public_html/magento2/magento/
+ModX                 2.2.8-pl                       /home/antun/public_html/modx/modx-2.2.8-pl/
+Moodle               2.5(Build:20130514)            /home/antun/public_html/moodle2/moodle/
+Moodle               2.5+(Build:20130530)           /home/antun/public_html/moodle/moodle/
+MyBB                 1.6.10                         /home/antun/public_html/mybb/Upload/
+SMF                  2.0.4                          /home/antun/public_html/smf/
+Wordpress            3.5.1                          /home/antun/public_html/wp/wordpress
+e107                 1.0.4                          /home/antun/public_html/e107/
+phpBB                3.0.11                         /home/antun/public_html/phpbb/phpBB3/
+Scrips detected: 16
+
+```
+
 ## Contributing
 
 1. Fork it
